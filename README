@@ -1,0 +1,7 @@
+# Programa     : mysqlws
+# Autor        : Santiago Higuera shiguera@ingemoral.es
+# Fecha inicio : Abril 2011
+# Descripción  : Librería para acceder desde Javascript a
+                 la B.D. mysql (Utilizando un programa php
+                 en el servidor)
+
