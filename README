@@ -4,4 +4,14 @@
 # Descripción  : Librería para acceder desde Javascript a
                  la B.D. mysql (Utilizando un programa php
                  en el servidor)
-
+# Utilización:
+    - Se copian los ficheros mysqlws.js y mysqlws.php en el servidor
+    - En la primera linea de mysqlws.js se ajusta el valor de la variable urlMysqlwsphp para que
+    el fichero javascript encuentre al php.
+    - En el html se enlaza al fichero js:
+            <script src="mysqlws.js"></script>
+   - Ahora se pueden usar los métodos de la librería:
+           * mysql_use(host,user,pw,db) : Se debe llamar en primer lugar antes de ninguna consulta SQL
+           * mysql_select_query(query) : para consultas tipo SELECT
+           * mysql_update_query(query) : para consultas tipo UPDATE, INSERT, etc
+           * mysql_col_names(tablename): Devuelve un array con los nombres de las columnas
