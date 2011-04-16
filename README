@@ -15,3 +15,8 @@
            * mysql_select_query(query) : para consultas tipo SELECT
            * mysql_update_query(query) : para consultas tipo UPDATE, INSERT, etc
            * mysql_col_names(tablename): Devuelve un array con los nombres de las columnas
+
+#notas:
+    - Los ficheros .js y .php tienen que estar en el mismo servidor pero la B.D. mysql puede estar en otro servidor
+
+   
