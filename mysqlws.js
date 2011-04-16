@@ -1,13 +1,27 @@
-var urlMysqlwsphp="../mysqlws.php";
-var mysql_db_name ="dbname";
+var urlMysqlwsphp="mysqlws.php";
+/**
+ * Se ha creado una base de datos para puebas en el servidor local de mysql mediante:
+ *     source createtesttables.sql
+ * Se ha creado un usuario local en mysql mediante:
+ *     create user 'guest'@'localhost' identified by 'guestpass';
+ *     grant all on pruebasmysqlws.* to 'guest'@'localhost'
+ */
+var mysql_host="localhost";
+var mysql_user="guest";
+var mysql_pw="guestpass";
+var mysql_db_name ="pruebasmysqlws";
+
 
 // Acceso a mysql
-function mysql_use( dbname) {
+function mysql_use( host, user, pw, dbname) {
+	mysql_host=host;
+	mysql_user=user;
+	mysql_pw = pw;
 	mysql_db_name = dbname; 
 }
 function mysql_select_query(query) {
 	var c="selectQuery";
-	var xmlresp = doRequest(c, query);
+	var xmlresp = doPutRequest(c, query);
 	return responseContent(xmlresp);
 }
 function mysql_update_query(query) {
@@ -303,6 +317,32 @@ function doRequest(comm, pars) {
 	req.send(null);
 	return req.responseXML;
 }
+function doPutRequest(comm, pars) {
+	var req = new ajaxRequest();
+	if (pars == "") {
+		pars = "1";
+	}
+	pars = 'c=' + comm + '&p=' + pars + '&host=' + mysql_host;
+	pars += '&user=' + mysql_user;
+	pars += '&pw=' + mysql_pw;
+	pars += '&db=' + mysql_db_name;
+	
+	var url = urlMysqlwsphp
+	req.open("POST", url, false);
+	
+	//req.setRequestHeader("Content-type", "text/xml");
+	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+	//req.setRequestHeader("Content-length", pars.length);
+	//req.setRequestHeader("Connection", "close");
+	
+	req.send(pars);
+	
+	return req.responseXML;
+};
+
+
+
 function loadXmlDoc(name) {
 	var req = new ajaxRequest();
 	req.open("GET", name, false);

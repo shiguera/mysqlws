@@ -1,12 +1,11 @@
-/**
+<?php
+/*
 * mysqlws.php Componente del servidor.
 *             Recibe las llamadas desde la librería Javascript mysqlws.js
 *             Las llamadas son de la forma:
 *                 mysqlws.php?c=comando&p=parameters&host=host&db=db&user=user&pw=pw
 *             
 */
-
-<?php
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header('Content-Type: text/xml');
@@ -17,29 +16,33 @@ $user="root";
 $pw="password";
 $db="dbname";
 
+		
 
-if(isset($_GET['c']) and isset($_GET['p'])) {
-	$command=$_GET['c'];
-	$params = $_GET['p'];
-	if(isset($_GET['db'])) {
-		$db = $_GET['db'];
+if(isset($_POST['c']) and isset($_POST['p'])) {
+
+	$command=$_POST['c'];
+	$params = $_POST['p'];
+	if(isset($_POST['host'])) {
+		$host = $_POST['host'];
 	}
-	if(isset($_GET['host'])) {
-		$host = $_GET['host'];
+	if(isset($_POST['user'])) {
+		$user = $_POST['user'];
 	}
-	if(isset($_GET['user'])) {
-		$user = $_GET['user'];
+	if(isset($_POST['pw'])) {
+		$pw = $_POST['pw'];
 	}
-	if(isset($_GET['pw'])) {
-		$pw = $_GET['pw'];
+	if(isset($_POST['db'])) {
+		$db = $_POST['db'];
 	}
+
 	
 	$resp = processcommand($command, $params);
 } else {
-	$resp=createResponse(0, "ERROR", "Parametros HTTPGET incorrectos");
+	$resp=createResponse(0, "ERROR", "Parametros HTTP incorrectos");
 }
 echo $resp;
 return;
+
 
 function processCommand($command, $params) {
 	// processCommand
@@ -119,13 +122,16 @@ function selectQuery($query) {
 // devuelve: xmlresponse con el resultado
 	
 	GLOBAL $host, $user, $pw, $db;
-
+	
 	// Abrir la conexión con mysql
+	
+	
 	$conn = opendb($host, $user, $pw, $db);
-	if(!$conn) {
+	
+	if(!$conn) {	
 		return createResponse(-2,"ERROR","Error de conexión.-$conn");
 	}
-
+	
 	// Realizar la consulta a la B.D.
 	$result=mysql_query($query, $conn);
 	
@@ -133,26 +139,33 @@ function selectQuery($query) {
 		$nc = mysql_num_fields($result);
 		
 		$cad="";
-		while( $row = mysql_fetch_array($result, MYSQL_BOTH)) {
-			$cad .="<item>";
-			for($i=0; $i<$nc; $i++) {
-				$cad .= $row[$i];
+		$n = 0;
+		while( $row = mysql_fetch_row($result)) {
+			
+			$cad .= "&lt;item&gt;";			
+			
+			for($i=0; $i<$nc; ++$i) {
+				$cad .= utf8_encode($row[$i]);
+				
 				if($i<$nc-1) {
 					$cad .= ",";
 				}
 			}
-			$cad .= "</item>";
+			
+			$cad .= "&lt;/item&gt;";
+			
 		}
-		
+						
 		mysql_free_result($result);
+			
+		$response = createResponse(1,"OK",$cad);		
 		
-		$response = createResponse(1, "OK", $cad);
 	} else {
 		$response = createResponse(0, "ERROR", "Error en la llamada SQL"); 
 	}
 	// Cerrar la conexión
 	closedb($conn);
-
+		
 	// Devolver el resultado
 	return $response;
 };
@@ -264,10 +277,11 @@ function createResponse($code, $text, $content) {
 	$cadxml="<wsResponse>";
 	$cadxml=$cadxml."<statusCode>$code</statusCode>";
 	$cadxml=$cadxml."<statusText>$text</statusText>";
-	$cadxml=$cadxml."<content>$content</content>";
+	$cadxml=$cadxml."<content>$content</content>;";
 	$cadxml=$cadxml."</wsResponse>";
 	$doc->loadXML($cadxml);
 	return $doc->saveXML();
+	
 };
 
 function createResponseFromCode($code) {
