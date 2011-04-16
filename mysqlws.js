@@ -327,7 +327,7 @@ function doPutRequest(comm, pars) {
 	pars += '&pw=' + mysql_pw;
 	pars += '&db=' + mysql_db_name;
 	
-	var url = urlMysqlwsphp
+	var url = urlMysqlwsphp;
 	req.open("POST", url, false);
 	
 	//req.setRequestHeader("Content-type", "text/xml");
