@@ -12,9 +12,9 @@
             <script src="mysqlws.js"></script>
    - Ahora se pueden usar los métodos de la librería:
            * mysql_use(host,user,pw,db) : Se debe llamar en primer lugar antes de ninguna consulta SQL
-           * mysql_select_query(query) : para consultas tipo SELECT
-           * mysql_update_query(query) : para consultas tipo UPDATE, INSERT, etc
-           * mysql_col_names(tablename): Devuelve un array con los nombres de las columnas
+           * mysql_select_query(query) : para consultas tipo SELECT. Devuelve un Array de Arrays con las filas resultado de la consulta.
+           * mysql_update_query(query) : para consultas tipo UPDATE, INSERT, etc. Devueve el resultado en result[0]
+           * mysql_col_names(tablename): Devuelve un array con los nombres de las columnas. Devuelve aun Array con los nombres de las columnas
 
 #notas:
     - Los ficheros .js y .php tienen que estar en el mismo servidor pero la B.D. mysql puede estar en otro servidor
