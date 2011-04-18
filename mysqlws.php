@@ -11,10 +11,13 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header('Content-Type: text/xml');
 header("Content-Transfer-Encoding: binary");
 
+// Estas variables toman valor a través de las variables javascript
+// correspondientes que se encuentran en mysqlws.js y que se establecen
+// llamando al método javascript use(host,user,pw,db)
 $host="localhost";
-$user="root";
-$pw="password";
-$db="dbname";
+$user="guest";
+$pw="guestpass";
+$db="pruebasmysqlws";
 
 		
 

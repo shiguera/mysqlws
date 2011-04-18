@@ -1,10 +1,13 @@
 var urlMysqlwsphp="mysqlws.php";
 /**
- * Se ha creado una base de datos para puebas en el servidor local de mysql mediante:
+ * Se puede crear una base de datos para puebas en el servidor de mysql mediante:
  *     source createtesttables.sql
- * Se ha creado un usuario local en mysql mediante:
+ * Se puede crear un usuario local en mysql mediante:
  *     create user 'guest'@'localhost' identified by 'guestpass';
  *     grant all on pruebasmysqlws.* to 'guest'@'localhost'
+ * Mediante el metodo 'use(host, user, pw, db)' se pueden asignar los
+ * valores deseados a estas variables. El host de la B.D no tiene porque ser el 
+ * mismo que el de la librería y la página web
  */
 var mysql_host="localhost";
 var mysql_user="guest";
