@@ -145,7 +145,7 @@ function selectQuery($query) {
 		$n = 0;
 		while( $row = mysql_fetch_row($result)) {
 			
-			$cad .= "&lt;item&gt;";			
+			$cad .= "<item>";			
 			
 			for($i=0; $i<$nc; ++$i) {
 				$cad .= utf8_encode($row[$i]);
@@ -155,7 +155,7 @@ function selectQuery($query) {
 				}
 			}
 			
-			$cad .= "&lt;/item&gt;";
+			$cad .= "</item>";
 			
 		}
 						
