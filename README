@@ -6,6 +6,7 @@
                  en el servidor)
 # Utilización:
     - Se copian los ficheros mysqlws.js y mysqlws.php en el servidor.
+    - En el fichero mysqlws.php se ponen los valores correctos en host, database,  user, password y 
     - En la primera linea de mysqlws.js se ajusta el valor de la variable urlMysqlwsphp para que el fichero javascript encuentre al php.
     - En el html se enlaza al fichero js:
             <script src="mysqlws.js"></script>
